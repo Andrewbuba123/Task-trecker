@@ -30,8 +30,7 @@ export const AuthPage = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
-    // Сбрасываем ошибку поля и общую ошибку, когда пользователь начинает вводить заново
+
     if (errors[name as keyof AuthFormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }

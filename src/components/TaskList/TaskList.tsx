@@ -3,7 +3,7 @@ import { Task as TaskType, TaskListProps } from "../../types";
 import { Link } from "react-router-dom";
 import "./TaskList.css";
 
-export const TaskList = ({ tasks, onDelete }: TaskListProps) => {
+export const TaskList = ({ tasks, onDelete , orientation = "vertical" , onTake, onComplete }: TaskListProps) => {
   if (tasks.length === 0) {
     return (
       <div className="task-list-empty">
@@ -20,7 +20,7 @@ export const TaskList = ({ tasks, onDelete }: TaskListProps) => {
   }
 
   return (
-    <ul className="task-list">
+    <ul className={`task-list task-list--${orientation}`}>
       {tasks.map((task: TaskType) => (
         <Task
           key={task.id}
@@ -29,6 +29,10 @@ export const TaskList = ({ tasks, onDelete }: TaskListProps) => {
           description={task.description}
           count={task.count}
           onDelete={onDelete}
+          onTake={onTake}
+          onComplete={onComplete}
+          status={task.status}
+          userId={task.userId}
         />
       ))}
     </ul>

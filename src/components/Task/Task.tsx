@@ -7,10 +7,23 @@ export const Task = ({
   description,
   count,
   onDelete,
+  onTake,
+  onComplete,
+  status,
+  userId,
 }: TaskProps) => {
   const handleDelete = () => {
     onDelete(id);
   };
+
+  const handleTake = () => {
+    onTake(id);
+  };
+
+  const handleComplete = () => {
+    onComplete(id)
+  }
+
 
   return (
     <li className="task">
@@ -22,7 +35,7 @@ export const Task = ({
           <button className="button" onClick={handleDelete}>
             Удалить
           </button>
-          <button className="button">Изменить</button>
+          <button className="button" onClick={handleTake}>Взять</button>
         </div>
       </div>
     </li>

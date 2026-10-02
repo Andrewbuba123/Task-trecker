@@ -1,0 +1,29 @@
+.user-tasks {
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 1;
+  padding: 28px 40px;
+  min-width: 0;
+  margin-left: 250px; */
+  width: 100%;
+}
+
+.user-tasks__title{
+    margin-bottom: 30px;
+}
+
+.user-tasks__content {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-tasks__text {
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}

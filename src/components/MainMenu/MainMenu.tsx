@@ -8,6 +8,8 @@ export const MainMenu = ({ tasks }: MainMenuProps) => {
 
   const userInitial = user?.login ? user.login.charAt(0).toUpperCase() : "?";
 
+  
+
   return (
     <nav className="main-menu">
       <div className="main-menu__title">Меню</div>
@@ -20,7 +22,7 @@ export const MainMenu = ({ tasks }: MainMenuProps) => {
         </li>
         <li className="main-menu__item">
           <NavLink to="/tasks" className="main-menu__link">
-            Задачи ({tasks.length})
+            Мои задачи
           </NavLink>
         </li>
       </ul>

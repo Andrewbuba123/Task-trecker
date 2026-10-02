@@ -11,6 +11,7 @@ const initialFormData: TaskFormData = {
   title: "",
   description: "",
   count: "",
+  status: "Active"
 };
 
 type FormErrors = Partial<Record<keyof TaskFormData, string>>;

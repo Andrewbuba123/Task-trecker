@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
 import { HomePage } from "../HomePage/HomePage";
-import { TasksPage } from "../TasksPage/TasksPage";
+import { UserTasks } from "../UserTasks/UserTasks";
 import { Task, TaskFormData } from "../../types";
 
 import { AuthPage } from "../AuthPage/AuthPage";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
+import { set } from "react-hook-form";
 
 export const App = () => {
+  const currentUser = JSON.parse(localStorage.getItem("current_user"));
+
   const [tasks, setTasks] = useState<Task[]>(() => {
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : [];
@@ -24,12 +27,32 @@ export const App = () => {
       title: newTaskData.title,
       description: newTaskData.description,
       count: newTaskData.count,
+      status: newTaskData.status,
+      userId: null,
     };
     setTasks((prev) => [...prev, taskWithId]);
   };
 
   const deleteTask = (id: string) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
+  };
+
+  const takeTask = (id: string) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id
+          ? { ...task, userId: currentUser.id, status: "Inprogress" }
+          : task,
+      ),
+    );
+  };
+
+  const completeTask = (id: string) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, status: "Completed" } : task,
+      ),
+    );
   };
 
   return (
@@ -46,13 +69,14 @@ export const App = () => {
                   tasks={tasks}
                   onAddTask={addTask}
                   onDeleteTask={deleteTask}
+                  onTakeTask={takeTask}
                 />
               }
             />
 
             <Route
               path="/tasks"
-              element={<TasksPage tasks={tasks} onDeleteTask={deleteTask} />}
+              element={<UserTasks tasks={tasks} onDeleteTask={deleteTask} onCompleteTask={completeTask}/>}
             />
           </Route>
         </Route>
