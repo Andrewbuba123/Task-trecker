@@ -6,7 +6,8 @@ export interface Task {
   description: string;
   count: number | string;
   status: "Active" | "Completed" | "Inprogress";
-  userId: string | null;
+  authorId: string | null;
+  assigneeId: string | null;
 }
 
 export interface TaskFormData {
@@ -31,10 +32,11 @@ export interface TaskProps {
   description: string;
   count: number | string;
   onDelete: (id: string) => void;
-  onTake: (id: string) => void;
-  onComplete: (id: string) => void;
+  onTake?: (id: string) => void;
+  onComplete?: (id: string) => void;
   status: "Active" | "Completed" | "Inprogress";
-  userId: string | null;
+  authorId : string | null;
+  assigneeId : string | null;
 }
 
 export interface PageFormProps {
@@ -47,6 +49,7 @@ export interface TaskListProps {
   orientation: "vertical" | "horizontal";
   onTake?: (id: string) => void;
   onComplete?: (id: string) => void;
+  emptyState?: boolean;
 }
 
 export interface ButtonProps {

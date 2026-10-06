@@ -59,3 +59,20 @@
 .task-list-empty__link:active {
   transform: scale(0.98);
 }
+
+.task-list-simple-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.task-list-simple-empty__text {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #666;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}

@@ -1,13 +1,17 @@
+import { useAuth } from "../../hooks/useAuth";
 import { TasksPageProps } from "../../types";
 import { TaskList } from "../TaskList/TaskList";
 import "./UserTasks.css";
 
 export const UserTasks = ({ tasks, onDeleteTask, onCompleteTask }: TasksPageProps) => {
+
+  const {user} = useAuth();
+
   const inProgressTasks = tasks.filter(
-    (task) => task.userId !== null && task.status === "Inprogress",
+    (task) => task.assigneeId === user?.id && task.status === "Inprogress",
   );
   const completedTasks = tasks.filter(
-    (task) => task.userId !== null && task.status === "Completed",
+    (task) => task.assigneeId === user?.id  && task.status === "Completed",
   );
 
   return (
@@ -21,6 +25,7 @@ export const UserTasks = ({ tasks, onDeleteTask, onCompleteTask }: TasksPageProp
             onDelete={onDeleteTask}
             onComplete={onCompleteTask}
             orientation="vertical"
+            emptyState={true}
           />
         </div>
         <div className="user-tasks__content--completed">
@@ -29,6 +34,7 @@ export const UserTasks = ({ tasks, onDeleteTask, onCompleteTask }: TasksPageProp
             tasks={completedTasks}
             onDelete={onDeleteTask}
             orientation="vertical"
+            emptyState={false}
           />
         </div>
       </div>

@@ -3,8 +3,15 @@ import { Task as TaskType, TaskListProps } from "../../types";
 import { Link } from "react-router-dom";
 import "./TaskList.css";
 
-export const TaskList = ({ tasks, onDelete , orientation = "vertical" , onTake, onComplete }: TaskListProps) => {
-  if (tasks.length === 0) {
+export const TaskList = ({
+  tasks,
+  onDelete,
+  orientation = "vertical",
+  onTake,
+  onComplete,
+  emptyState
+}: TaskListProps) => {
+  if (tasks.length === 0 && emptyState) {
     return (
       <div className="task-list-empty">
         <div className="task-list-empty__icon">📝</div>
@@ -15,6 +22,14 @@ export const TaskList = ({ tasks, onDelete , orientation = "vertical" , onTake, 
         <Link to="/" className="task-list-empty__link">
           + Добавить задачу
         </Link>
+      </div>
+    );
+  }
+
+ if (tasks.length === 0) {
+    return (
+      <div className="task-list-simple-empty">
+        <p className="task-list-simple-empty__text">Нет задач</p>
       </div>
     );
   }
@@ -32,7 +47,8 @@ export const TaskList = ({ tasks, onDelete , orientation = "vertical" , onTake, 
           onTake={onTake}
           onComplete={onComplete}
           status={task.status}
-          userId={task.userId}
+          authorId={task.authorId}
+          assigneeId={task.assigneeId}
         />
       ))}
     </ul>

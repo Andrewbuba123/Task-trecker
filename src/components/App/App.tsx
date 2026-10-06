@@ -7,10 +7,10 @@ import { Task, TaskFormData } from "../../types";
 
 import { AuthPage } from "../AuthPage/AuthPage";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
-import { set } from "react-hook-form";
+import { useAuth } from "../../hooks/useAuth";
 
 export const App = () => {
-  const currentUser = JSON.parse(localStorage.getItem("current_user"));
+  const { user } = useAuth();
 
   const [tasks, setTasks] = useState<Task[]>(() => {
     const savedTasks = localStorage.getItem("tasks");
@@ -28,7 +28,8 @@ export const App = () => {
       description: newTaskData.description,
       count: newTaskData.count,
       status: newTaskData.status,
-      userId: null,
+      authorId: user?.id ?? null,
+      assigneeId: null,
     };
     setTasks((prev) => [...prev, taskWithId]);
   };
@@ -41,7 +42,7 @@ export const App = () => {
     setTasks((prev) =>
       prev.map((task) =>
         task.id === id
-          ? { ...task, userId: currentUser.id, status: "Inprogress" }
+          ? { ...task, assigneeId: user?.id ?? null, status: "Inprogress" }
           : task,
       ),
     );
@@ -76,7 +77,13 @@ export const App = () => {
 
             <Route
               path="/tasks"
-              element={<UserTasks tasks={tasks} onDeleteTask={deleteTask} onCompleteTask={completeTask}/>}
+              element={
+                <UserTasks
+                  tasks={tasks}
+                  onDeleteTask={deleteTask}
+                  onCompleteTask={completeTask}
+                />
+              }
             />
           </Route>
         </Route>

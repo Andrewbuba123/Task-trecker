@@ -1,13 +1,26 @@
-import { PageForm } from "../PageForm/pageForm";
+import { PageForm } from "../PageForm/PageForm";
 import { TaskList } from "../TaskList/TaskList";
 import { HomePageProps } from "../../types";
-import "./HomePage.css"
+import "./HomePage.css";
 
-export const HomePage = ({ tasks, onAddTask, onDeleteTask, onTakeTask }: HomePageProps) => {
+export const HomePage = ({
+  tasks,
+  onAddTask,
+  onDeleteTask,
+  onTakeTask,
+}: HomePageProps) => {
+  const activeTasks = tasks.filter((task) => task.status === "Active");
+
   return (
     <>
       <PageForm onAddTask={onAddTask} />
-      <TaskList tasks={tasks} onDelete={onDeleteTask} orientation="horizontal" onTake={onTakeTask}/>
+      <TaskList
+        tasks={activeTasks}
+        onDelete={onDeleteTask}
+        orientation="horizontal"
+        onTake={onTakeTask}
+        emptyState={false}
+      />
     </>
   );
 };
