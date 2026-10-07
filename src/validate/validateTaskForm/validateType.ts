@@ -2,6 +2,8 @@ import { formErrors } from "../../utils/dictionary";
 import { ValidationResult } from "../../types";
 
 export function validateFormType(type: string): ValidationResult {
+  const trimmedType = type.trim();
+
   if (!type || type.trim() === "") {
     return {
       isValid: false,
@@ -9,7 +11,7 @@ export function validateFormType(type: string): ValidationResult {
     };
   }
 
-  if (type.length < 10) {
+  if (trimmedType.length < 10) {
     return {
       isValid: false,
       message: formErrors.type.minLength,

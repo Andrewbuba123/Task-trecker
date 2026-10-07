@@ -11,6 +11,13 @@ export function validateFormCount(count: string): ValidationResult {
 
   const num = Number(count);
 
+  if (!Number.isInteger(num)) {
+    return {
+      isValid: false,
+      message: formErrors.count.isInteger,
+    };
+  }
+
   if (isNaN(num)) {
     return {
       isValid: false,

@@ -11,7 +11,7 @@ const initialFormData: TaskFormData = {
   title: "",
   description: "",
   count: "",
-  status: "Active"
+  status: "Active",
 };
 
 type FormErrors = Partial<Record<keyof TaskFormData, string>>;
@@ -23,6 +23,10 @@ export const PageForm = ({ onAddTask }: PageFormProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (errors[name as keyof TaskFormData]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   const validate = (): boolean => {

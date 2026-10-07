@@ -14,6 +14,7 @@ export const HomePage = ({
   return (
     <>
       <PageForm onAddTask={onAddTask} />
+      <h2>Актуальные задачи:</h2>
       <TaskList
         tasks={activeTasks}
         onDelete={onDeleteTask}

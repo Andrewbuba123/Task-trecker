@@ -7,8 +7,10 @@ export const MainMenu = ({ tasks }: MainMenuProps) => {
   const { user, logout } = useAuth();
 
   const userInitial = user?.login ? user.login.charAt(0).toUpperCase() : "?";
-
-  
+  const userTasks = tasks.filter(
+    (task) => task.status === "Inprogress" && task.assigneeId === user?.id,
+  );
+  const userTasksCount = userTasks.length;
 
   return (
     <nav className="main-menu">
@@ -22,7 +24,7 @@ export const MainMenu = ({ tasks }: MainMenuProps) => {
         </li>
         <li className="main-menu__item">
           <NavLink to="/tasks" className="main-menu__link">
-            Мои задачи
+            Мои задачи({userTasksCount})
           </NavLink>
         </li>
       </ul>

@@ -1,5 +1,5 @@
 .page-form {
-  margin: 0;
+  margin: 0 0 20px;
   padding: 0;
   width: 100%;
   max-width: 400px;
@@ -7,4 +7,5 @@
   flex-direction: column;
   gap: 10px;
   align-self: center;
+
 }

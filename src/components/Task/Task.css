@@ -63,11 +63,6 @@
   cursor: pointer;
 }
 
-.task__buttons .button:first-child {
-  background-color: #ffebee;
-  color: #d32f2f;
-}
-
 .task__buttons .button:last-child {
   background-color: #e8f5e9;
   color: #2e7d32;

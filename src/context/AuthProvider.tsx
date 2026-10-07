@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import {
   getCurrentUser,
-  login as loginToStorage,
+  loginUser as loginToStorage,
   logout as logoutFromStorage,
   registerUser as registerInStorage
 } from "../utils/auth";

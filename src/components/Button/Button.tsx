@@ -1,9 +1,9 @@
 import { ButtonProps } from "../../types";
 import "./Button.css";
 
-export const Button = ({ text, type } : ButtonProps) => {
+export const Button = ({ text, type , onClick } : ButtonProps) => {
   return (
-    <button className="button" type={type}>
+    <button className="button" type={type} onClick={onClick}>
       {text}
     </button>
   );

@@ -1,5 +1,6 @@
 import { useAuth } from "../../hooks/useAuth";
 import { TaskProps } from "../../types";
+import { Button } from "../Button/Button";
 import "./Task.css";
 
 export const Task = ({
@@ -39,19 +40,13 @@ export const Task = ({
         <span className="task__count">Количество работников: {count}</span>
         <div className="task__buttons">
           {canDelete && (
-            <button className="button" onClick={handleDelete}>
-              Удалить
-            </button>
+            <Button  text="Удалить" onClick={handleDelete}></Button>
           )}
           {canTake && (
-            <button className="button" onClick={handleTake}>
-              Взять
-            </button>
+            <Button  text="Взять" onClick={handleTake}></Button>
           )}
           {canComplete && (
-            <button className="button" onClick={handleComplete}>
-              Завершить
-            </button>
+             <Button  text="Завершить" onClick={handleComplete}></Button>
           )}
         </div>
       </div>

@@ -10,14 +10,14 @@ export const registerUser = (
 ): User | null => {
   const users = getAllUsers();
 
-  const exist = users.some((u) => u.login === loginValue);
+  const exist = users.some((u) => u.login === loginValue.trim());
   if (exist) {
     return null;
   }
 
   const newUser: User = {
     id: crypto.randomUUID(),
-    login: loginValue,
+    login: loginValue.trim(),
     password,
   };
 
@@ -33,10 +33,10 @@ export const logout = (): void => {
   localStorage.removeItem(SESSION_KEY);
 };
 
-export const login = (loginValue: string, password: string): User | null => {
+export const loginUser = (loginValue: string, password: string): User | null => {
   const users = getAllUsers();
   const existingUser = users.find(
-    (u) => u.login === loginValue && u.password === password,
+    (u) => u.login === loginValue.trim() && u.password === password,
   );
 
   if (!existingUser) {
