@@ -20,7 +20,7 @@
 .task__content {
   display: flex;
   flex-direction: column;
-  min-width: 460px
+  min-width: 460px;
 }
 
 .task__title {

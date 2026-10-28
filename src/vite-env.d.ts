@@ -1,5 +1,1 @@
-
-declare module '*.css' {
-  const content: any;
-  export default content;
-}
+/// <reference types="vite/client" />

@@ -3,7 +3,6 @@ import { User } from "../types";
 const USERS_KEY = "users";
 const SESSION_KEY = "current_user";
 
-
 export const registerUser = (
   loginValue: string,
   password: string,
@@ -33,7 +32,10 @@ export const logout = (): void => {
   localStorage.removeItem(SESSION_KEY);
 };
 
-export const loginUser = (loginValue: string, password: string): User | null => {
+export const loginUser = (
+  loginValue: string,
+  password: string,
+): User | null => {
   const users = getAllUsers();
   const existingUser = users.find(
     (u) => u.login === loginValue.trim() && u.password === password,

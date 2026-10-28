@@ -3,15 +3,18 @@ import { TasksPageProps } from "../../types";
 import { TaskList } from "../TaskList/TaskList";
 import "./UserTasks.css";
 
-export const UserTasks = ({ tasks, onDeleteTask, onCompleteTask }: TasksPageProps) => {
-
-  const {user} = useAuth();
+export const UserTasks = ({
+  tasks,
+  onDeleteTask,
+  onCompleteTask,
+}: TasksPageProps) => {
+  const { user } = useAuth();
 
   const inProgressTasks = tasks.filter(
     (task) => task.assigneeId === user?.id && task.status === "Inprogress",
   );
   const completedTasks = tasks.filter(
-    (task) => task.assigneeId === user?.id  && task.status === "Completed",
+    (task) => task.assigneeId === user?.id && task.status === "Completed",
   );
 
   return (

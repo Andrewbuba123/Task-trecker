@@ -1,12 +1,12 @@
-import React from "react";
-type taskStatus  = "Active" | "Completed" | "Inprogress";
+import type React from "react";
+type TaskStatus = "Active" | "Completed" | "Inprogress";
 
 export interface Task {
   id: string;
   title: string;
   description: string;
   count: number | string;
-  status: taskStatus;
+  status: TaskStatus;
   authorId: string | null;
   assigneeId: string | null;
 }
@@ -15,7 +15,7 @@ export interface TaskFormData {
   title: string;
   description: string;
   count: number | string;
-  status: taskStatus;
+  status: TaskStatus;
 }
 
 export interface FormFieldProps {
@@ -35,9 +35,9 @@ export interface TaskProps {
   onDelete: (id: string) => void;
   onTake?: (id: string) => void;
   onComplete?: (id: string) => void;
-  status: taskStatus;
-  authorId : string | null;
-  assigneeId : string | null;
+  status: TaskStatus;
+  authorId: string | null;
+  assigneeId: string | null;
 }
 
 export interface PageFormProps {
@@ -56,7 +56,7 @@ export interface TaskListProps {
 export interface ButtonProps {
   text: string;
   type?: "button" | "submit" | "reset";
-  onClick? : (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export interface MainMenuProps {

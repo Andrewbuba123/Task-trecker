@@ -4,7 +4,7 @@ import {
   getCurrentUser,
   loginUser as loginToStorage,
   logout as logoutFromStorage,
-  registerUser as registerInStorage
+  registerUser as registerInStorage,
 } from "../utils/auth";
 import { User } from "../types";
 
@@ -22,21 +22,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return true;
   };
 
-  const register = (loginValue: string , password: string): boolean => {
+  const register = (loginValue: string, password: string): boolean => {
     const newUser = registerInStorage(loginValue, password);
-    if(!newUser){
-      return false
+    if (!newUser) {
+      return false;
     }
     setUser(newUser);
     return true;
-  }
+  };
 
   const logout = () => {
     logoutFromStorage();
     setUser(null);
   };
 
- return (
+  return (
     <AuthContext.Provider
       value={{
         user,

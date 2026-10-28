@@ -49,7 +49,9 @@
   background: #6bbf59;
   border-radius: 12px;
   text-decoration: none;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
 }
 
 .task-list-empty__link:hover {

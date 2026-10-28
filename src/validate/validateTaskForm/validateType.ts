@@ -1,34 +1,23 @@
 import { formErrors } from "../../utils/dictionary";
 import { ValidationResult } from "../../types";
 
-export function validateFormType(type: string): ValidationResult {
+const MIN_TYPE_LENGTH = 10;
+const INVALID_CHARS = /[^а-яА-Яa-zA-Z0-9\s\-.,()]/;
+
+export const validateFormType = (type: string): ValidationResult => {
   const trimmedType = type.trim();
 
-  if (!type || type.trim() === "") {
-    return {
-      isValid: false,
-      message: formErrors.type.required,
-    };
+  if (!trimmedType) {
+    return { isValid: false, message: formErrors.type.required };
   }
 
-  if (trimmedType.length < 10) {
-    return {
-      isValid: false,
-      message: formErrors.type.minLength,
-    };
+  if (trimmedType.length < MIN_TYPE_LENGTH) {
+    return { isValid: false, message: formErrors.type.minLength };
   }
 
-  const invalidChars = /[^а-яА-Яa-zA-Z0-9\s\-.,()]/;
-
-  if (invalidChars.test(type)) {
-    return {
-      isValid: false,
-      message: formErrors.type.inValid,
-    };
+  if (INVALID_CHARS.test(type)) {
+    return { isValid: false, message: formErrors.type.inValid };
   }
 
-  return {
-    isValid: true,
-    message: "",
-  };
-}
+  return { isValid: true };
+};

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
 import { HomePage } from "../HomePage/HomePage";
 import { UserTasks } from "../UserTasks/UserTasks";
@@ -9,21 +9,29 @@ import { AuthPage } from "../AuthPage/AuthPage";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import { useAuth } from "../../hooks/useAuth";
 
+const TASKS_KEY = "tasks";
+
+const loadTasks = (): Task[] => {
+  try {
+    const raw = localStorage.getItem(TASKS_KEY);
+    return raw ? (JSON.parse(raw) as Task[]) : [];
+  } catch {
+    return [];
+  }
+};
+
 export const App = () => {
   const { user } = useAuth();
 
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    return savedTasks ? JSON.parse(savedTasks) : [];
-  });
+  const [tasks, setTasks] = useState<Task[]>(loadTasks);
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
   }, [tasks]);
 
   const addTask = (newTaskData: TaskFormData) => {
     const taskWithId: Task = {
-      id: String(Date.now()),
+      id: crypto.randomUUID(),
       title: newTaskData.title,
       description: newTaskData.description,
       count: newTaskData.count,
@@ -35,13 +43,15 @@ export const App = () => {
   };
 
   const deleteTask = (id: string) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+    setTasks((prev) =>
+      prev.filter((task) => task.id !== id || task.authorId !== user?.id),
+    );
   };
 
   const takeTask = (id: string) => {
     setTasks((prev) =>
       prev.map((task) =>
-        task.id === id
+        task.id === id && task.status === "Active" && task.authorId !== user?.id
           ? { ...task, assigneeId: user?.id ?? null, status: "Inprogress" }
           : task,
       ),
@@ -51,7 +61,11 @@ export const App = () => {
   const completeTask = (id: string) => {
     setTasks((prev) =>
       prev.map((task) =>
-        task.id === id ? { ...task, status: "Completed" } : task,
+        task.id === id &&
+        task.status === "Inprogress" &&
+        task.assigneeId === user?.id
+          ? { ...task, status: "Completed" }
+          : task,
       ),
     );
   };
@@ -87,6 +101,8 @@ export const App = () => {
             />
           </Route>
         </Route>
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

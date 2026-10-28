@@ -6,10 +6,10 @@ import "./TaskList.css";
 export const TaskList = ({
   tasks,
   onDelete,
-  orientation = "vertical",
+  orientation,
   onTake,
   onComplete,
-  emptyState
+  emptyState,
 }: TaskListProps) => {
   if (tasks.length === 0 && emptyState) {
     return (
@@ -26,7 +26,7 @@ export const TaskList = ({
     );
   }
 
- if (tasks.length === 0) {
+  if (tasks.length === 0) {
     return (
       <div className="task-list-simple-empty">
         <p className="task-list-simple-empty__text">Нет задач</p>

@@ -6,16 +6,24 @@
 
 1. Установить зависимости:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 2. Запустить приложение:
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
-##  Демо-доступ
+## Скрипты
 
-Логин: `admin`, пароль: `admin`.
+- `npm run build` — проверка типов и сборка в `dist`
+- `npm run preview` — просмотр собранной версии
+- `npm run lint` — ESLint
+- `npm run typecheck` — проверка типов TypeScript
+- `npm run format` / `npm run format:check` — форматирование Prettier
+
+## Вход
+
+Демо-пользователя нет: при первом запуске зарегистрируйте аккаунт на странице входа.
