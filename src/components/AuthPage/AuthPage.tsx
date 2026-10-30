@@ -18,7 +18,7 @@ type FormErrors = Partial<Record<keyof AuthFormData, string>>;
 export const AuthPage = () => {
   const { user, login, register } = useAuth();
 
-  const [isRegister, setIsRegister] = useState(true);
+  const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState<AuthFormData>(initialFormData);
   const [errors, setErrors] = useState<FormErrors>({});
   const [authError, setAuthError] = useState("");

@@ -1,4 +1,5 @@
 import { User } from "../types";
+import { DEMO_USERS } from "./demoData";
 
 const USERS_KEY = "users";
 const SESSION_KEY = "current_user";
@@ -53,7 +54,7 @@ export const loginUser = (
 export const getAllUsers = (): User[] => {
   try {
     const raw = localStorage.getItem(USERS_KEY);
-    return raw ? (JSON.parse(raw) as User[]) : [];
+    return raw ? (JSON.parse(raw) as User[]) : [...DEMO_USERS];
   } catch {
     return [];
   }

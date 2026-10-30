@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Task, AddTaskPayload, TaskActionPayload } from "../types";
+import { DEMO_TASKS } from "../utils/demoData";
 import type { RootState } from "./store";
 
 const TASKS_KEY = "tasks";
@@ -7,7 +8,7 @@ const TASKS_KEY = "tasks";
 export const loadTasks = (): Task[] => {
   try {
     const raw = localStorage.getItem(TASKS_KEY);
-    return raw ? (JSON.parse(raw) as Task[]) : [];
+    return raw ? (JSON.parse(raw) as Task[]) : [...DEMO_TASKS];
   } catch {
     return [];
   }
