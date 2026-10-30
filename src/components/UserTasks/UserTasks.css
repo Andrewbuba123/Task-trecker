@@ -18,3 +18,29 @@
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
+
+.user-tasks .task-list-empty {
+  max-width: 500px;
+  margin: 0;
+  padding: 32px 24px;
+}
+
+.user-tasks .task-list-empty__icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.user-tasks .task-list-empty__title {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.user-tasks .task-list-empty__text {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.user-tasks .task-list-empty__link {
+  padding: 12px 24px;
+  font-size: 15px;
+}

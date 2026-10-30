@@ -6,6 +6,11 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+
+.task-list--horizontal {
+  justify-content: center;
+}
+
 .task-list-empty {
   display: flex;
   flex-direction: column;

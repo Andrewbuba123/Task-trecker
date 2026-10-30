@@ -34,7 +34,7 @@ export const HomePage = () => {
   return (
     <>
       <PageForm onAddTask={handleAddTask} />
-      <h2>Актуальные задачи:</h2>
+      <h2 className="home-page__title">Актуальные задачи:</h2>
       <TaskList
         tasks={activeTasks}
         onDelete={handleDeleteTask}
