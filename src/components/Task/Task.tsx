@@ -18,7 +18,7 @@ export const Task = ({
   const { user } = useAuth();
   const canDelete = authorId === user?.id;
   const canTake = status === "Active" && authorId !== user?.id;
-  const canComplete = status === "Inprogress" && assigneeId === user?.id;
+  const canComplete = status === "InProgress" && assigneeId === user?.id;
 
   const handleDelete = () => {
     onDelete(id);

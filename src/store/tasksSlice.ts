@@ -5,10 +5,17 @@ import type { RootState } from "./store";
 
 const TASKS_KEY = "tasks";
 
+const migrateTasks = (tasks: Task[]): Task[] =>
+  tasks.map((task) =>
+    (task.status as string) === "Inprogress"
+      ? { ...task, status: "InProgress" }
+      : task,
+  );
+
 export const loadTasks = (): Task[] => {
   try {
     const raw = localStorage.getItem(TASKS_KEY);
-    return raw ? (JSON.parse(raw) as Task[]) : [...DEMO_TASKS];
+    return raw ? migrateTasks(JSON.parse(raw) as Task[]) : [...DEMO_TASKS];
   } catch {
     return [];
   }
@@ -47,7 +54,7 @@ const tasksSlice = createSlice({
       const { id, userId } = action.payload;
       return state.map((task) =>
         task.id === id && task.status === "Active" && task.authorId !== userId
-          ? { ...task, assigneeId: userId, status: "Inprogress" }
+          ? { ...task, assigneeId: userId, status: "InProgress" }
           : task,
       );
     },
@@ -56,7 +63,7 @@ const tasksSlice = createSlice({
       const { id, userId } = action.payload;
       return state.map((task) =>
         task.id === id &&
-        task.status === "Inprogress" &&
+        task.status === "InProgress" &&
         task.assigneeId === userId
           ? { ...task, status: "Completed" }
           : task,

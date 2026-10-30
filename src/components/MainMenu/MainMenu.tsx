@@ -10,7 +10,7 @@ export const MainMenu = () => {
   const userInitial = user?.login ? user.login.charAt(0).toUpperCase() : "?";
   const tasks = useAppSelector(selectTasks);
   const userTasks = tasks.filter(
-    (task) => task.status === "Inprogress" && task.assigneeId === user?.id,
+    (task) => task.status === "InProgress" && task.assigneeId === user?.id,
   );
   const userTasksCount = userTasks.length;
 

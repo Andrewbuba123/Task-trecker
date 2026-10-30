@@ -1,5 +1,5 @@
 import type React from "react";
-type TaskStatus = "Active" | "Completed" | "Inprogress";
+type TaskStatus = "Active" | "Completed" | "InProgress";
 
 export interface Task {
   id: string;

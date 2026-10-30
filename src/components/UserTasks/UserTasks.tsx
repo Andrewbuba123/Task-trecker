@@ -11,7 +11,7 @@ export const UserTasks = () => {
   const userId = user?.id ?? null;
 
   const inProgressTasks = tasks.filter(
-    (task) => task.assigneeId === user?.id && task.status === "Inprogress",
+    (task) => task.assigneeId === user?.id && task.status === "InProgress",
   );
   const completedTasks = tasks.filter(
     (task) => task.assigneeId === user?.id && task.status === "Completed",
