@@ -18,6 +18,16 @@ export interface TaskFormData {
   status: TaskStatus;
 }
 
+export interface AddTaskPayload {
+  taskData: TaskFormData;
+  userId: string | null;
+}
+
+export interface TaskActionPayload {
+  id: string;
+  userId: string | null;
+}
+
 export interface FormFieldProps {
   label: string;
   field: string;
@@ -57,27 +67,6 @@ export interface ButtonProps {
   text: string;
   type?: "button" | "submit" | "reset";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-export interface MainMenuProps {
-  tasks: Task[];
-}
-
-export interface LayoutProps {
-  tasks: Task[];
-}
-
-export interface HomePageProps {
-  tasks: Task[];
-  onAddTask: (data: TaskFormData) => void;
-  onDeleteTask: (id: string) => void;
-  onTakeTask: (id: string) => void;
-}
-
-export interface TasksPageProps {
-  tasks: Task[];
-  onDeleteTask: (id: string) => void;
-  onCompleteTask: (id: string) => void;
 }
 
 export interface ValidationResult {

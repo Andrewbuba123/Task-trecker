@@ -1,14 +1,14 @@
 import { useAuth } from "../../hooks/useAuth";
-import { TasksPageProps } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { completeTask, deleteTask, selectTasks } from "../../store/tasksSlice";
 import { TaskList } from "../TaskList/TaskList";
 import "./UserTasks.css";
 
-export const UserTasks = ({
-  tasks,
-  onDeleteTask,
-  onCompleteTask,
-}: TasksPageProps) => {
+export const UserTasks = () => {
   const { user } = useAuth();
+  const dispatch = useAppDispatch();
+  const tasks = useAppSelector(selectTasks);
+  const userId = user?.id ?? null;
 
   const inProgressTasks = tasks.filter(
     (task) => task.assigneeId === user?.id && task.status === "Inprogress",
@@ -16,6 +16,14 @@ export const UserTasks = ({
   const completedTasks = tasks.filter(
     (task) => task.assigneeId === user?.id && task.status === "Completed",
   );
+
+  const handleDeleteTask = (id: string) => {
+    dispatch(deleteTask({ id, userId }));
+  };
+
+  const handleCompleteTask = (id: string) => {
+    dispatch(completeTask({ id, userId }));
+  };
 
   return (
     <div className="user-tasks">
@@ -25,8 +33,8 @@ export const UserTasks = ({
           <span className="user-tasks__text">Задачи в разработке</span>
           <TaskList
             tasks={inProgressTasks}
-            onDelete={onDeleteTask}
-            onComplete={onCompleteTask}
+            onDelete={handleDeleteTask}
+            onComplete={handleCompleteTask}
             orientation="vertical"
             emptyState={true}
           />
@@ -35,7 +43,7 @@ export const UserTasks = ({
           <span className="user-tasks__text">Выполненные задачи</span>
           <TaskList
             tasks={completedTasks}
-            onDelete={onDeleteTask}
+            onDelete={handleDeleteTask}
             orientation="vertical"
             emptyState={false}
           />

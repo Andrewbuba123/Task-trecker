@@ -1,12 +1,14 @@
 import "./MainMenu.css";
-import { MainMenuProps } from "../../types";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { useAppSelector } from "../../store/hooks";
+import { selectTasks } from "../../store/tasksSlice";
 
-export const MainMenu = ({ tasks }: MainMenuProps) => {
+export const MainMenu = () => {
   const { user, logout } = useAuth();
 
   const userInitial = user?.login ? user.login.charAt(0).toUpperCase() : "?";
+  const tasks = useAppSelector(selectTasks);
   const userTasks = tasks.filter(
     (task) => task.status === "Inprogress" && task.assigneeId === user?.id,
   );
