@@ -28,12 +28,8 @@ export interface TaskActionPayload {
   userId: string | null;
 }
 
-export interface FormFieldProps {
+export interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  field: string;
-  value: string | number;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  type: string;
   error?: string;
 }
 

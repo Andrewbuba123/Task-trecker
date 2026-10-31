@@ -4,84 +4,65 @@ import { useAuth } from "../../hooks/useAuth";
 import "./AuthPage.css";
 import { FormField } from "../FormField/FormField";
 import { Button } from "../Button/Button";
-import { AuthFormData } from "../../types";
-import { validateLogin } from "../../validate/validateAuth/validateLogin";
-import { validatePassword } from "../../validate/validateAuth/validatePassword";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { authSchema, authFormValues } from "./schema";
 
-const initialFormData: AuthFormData = {
+const initialFormData: authFormValues = {
   login: "",
   password: "",
 };
 
-type FormErrors = Partial<Record<keyof AuthFormData, string>>;
-
 export const AuthPage = () => {
-  const { user, login, register } = useAuth();
-
   const [isRegister, setIsRegister] = useState(false);
-  const [formData, setFormData] = useState<AuthFormData>(initialFormData);
-  const [errors, setErrors] = useState<FormErrors>({});
   const [authError, setAuthError] = useState("");
+
+  const { user, login, register: registerUser } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<authFormValues>({
+    resolver: zodResolver(authSchema),
+    defaultValues: initialFormData,
+  });
 
   if (user) {
     return <Navigate to="/" replace />;
   }
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (errors[name as keyof AuthFormData]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-    if (authError) {
-      setAuthError("");
-    }
-  };
-
-  const validate = (): boolean => {
-    const loginResult = validateLogin(formData.login);
-    const passwordResult = validatePassword(formData.password);
-
-    setErrors({
-      login: loginResult.isValid ? undefined : loginResult.message,
-      password: passwordResult.isValid ? undefined : passwordResult.message,
-    });
-
-    return loginResult.isValid && passwordResult.isValid;
-  };
-
   const changeMode = () => {
     setIsRegister((prev) => !prev);
-    setFormData(initialFormData);
-    setErrors({});
+    reset();
     setAuthError("");
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = (data: authFormValues) => {
     setAuthError("");
 
-    if (!validate()) {
-      return;
-    }
-
     if (isRegister) {
-      const ok = register(formData.login, formData.password);
+      const ok = registerUser(data.login, data.password);
       if (!ok) {
         setAuthError("Пользователь с таким логином уже существует");
       }
     } else {
-      const ok = login(formData.login, formData.password);
+      const ok = login(data.login, data.password);
       if (!ok) {
         setAuthError("Неверный логин или пароль");
       }
     }
+
+    reset();
   };
 
   return (
     <div className="auth-page">
-      <form className="page-form auth-form" onSubmit={handleSubmit} noValidate>
+      <form
+        className="page-form auth-form"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
         <h2 className="auth-form__title">
           {isRegister ? "Регистрация" : "Вход"}
         </h2>
@@ -90,20 +71,16 @@ export const AuthPage = () => {
 
         <FormField
           label="Логин"
-          field="login"
-          value={formData.login}
-          onChange={handleChange}
           type="text"
-          error={errors.login}
+          {...register("login")}
+          error={errors.login?.message}
         />
 
         <FormField
           label="Пароль"
-          field="password"
-          value={formData.password}
-          onChange={handleChange}
           type="password"
-          error={errors.password}
+          {...register("password")}
+          error={errors.password?.message}
         />
 
         <Button
